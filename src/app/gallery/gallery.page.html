@@ -9,11 +9,19 @@
 <ion-content >
   <div id="container">
     <ion-text color="danger">
-      <p>{{ error }}</p>
+      @for(f of folderId; track $index){
+        <p>{{ f }}</p>
+      }
     </ion-text>
     <ion-fab horizontal="center" vertical="bottom">
       <ion-fab-button>
         <ion-icon name="add" (click)="add()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon  (click)="get()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="remove" (click)="clear()"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </div>

@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonFabButton, IonFab, IonIcon, IonFabList, IonText } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, folder, image } from 'ionicons/icons';
-import { Filesystem, Directory, Encoding, MkdirOptions, FilesystemDirectory } from '@capacitor/filesystem';
+import { add, folder, image,remove} from 'ionicons/icons';
+import { GalleryService } from '../services/gallery.service';
+import { Folder } from '../interfaces/folder.interface';
 
-const FOLDER_ROOT = 'my_app_root'
+
 
 @Component({
   selector: 'app-gallery',
@@ -15,69 +16,30 @@ const FOLDER_ROOT = 'my_app_root'
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonFabButton, IonFab, IonIcon, IonFabList, IonText]
 })
-export class GalleryPage implements OnInit {
-  error: string = ''
+export class GalleryPage  {
+  folderId: number[] = []
 
-  constructor() { 
-    addIcons({add, folder, image})
+  constructor(private _galleryService: GalleryService) {
+    addIcons({add, folder, image,remove})
   }
 
-  ngOnInit(): void {
-  }
-
-  private addNewFolder(folderName: string){
-    this.getExistingFolder()
-    let options: MkdirOptions = {
-      path: FOLDER_ROOT + "/" + folderName,
-      directory: Directory.Documents,
-      recursive: false,
-    }
-
-    const  createDir = async() => {
-      const contents = await Filesystem.mkdir(options)
-      .catch((err) => {
-        this.error = err
-      })
-      .then()
-    };
-    createDir()
-
-
-    
-  }
-
-  getExistingFolder(){
-    let options: MkdirOptions = {
-      path: FOLDER_ROOT,
-      directory: Directory.Documents,
-    }
-    const  readDir = async() => {
-      const contents = await Filesystem.readdir(options)
-      .catch((err) => {
-        this.error = err
-      })
-      .then((res)=> console.log(res))
-    };
-    readDir()
-  }
-
-  private readRoot(){
-    let options: MkdirOptions = {
-      path: FOLDER_ROOT,
-      directory: Directory.Documents,
-    }
-    const  readRoot = async() => {
-      const contents = await Filesystem.mkdir(options)
-      .catch((err) => {
-        console.log("error")
-      })
-      .then()
-    };
-    readRoot()
-  }
 
   add(){
-    this.addNewFolder("folder7")
+    console.log("add")
+    this._galleryService.addFolder()
+  }
+
+  get(){
+    console.log("get")
+   this._galleryService.getFolder()?.then((res : Folder[])=> {
+     let arr:number[] = []
+    if(res) res.forEach(el=> arr.push(el.nb))
+    this.folderId = arr
+   })
+  }
+
+  clear(){
+    this._galleryService.clear()
   }
 
 }
