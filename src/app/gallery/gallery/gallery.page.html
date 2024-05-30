@@ -1,0 +1,18 @@
+
+
+<ion-content >
+  <div id="container">
+    <div id="content">
+      @for(folder of folders;track $index){
+        <app-folder [folder]="folder"></app-folder>
+      }
+    </div>
+    <ion-fab horizontal="center" vertical="bottom">
+      <ion-fab-button  (click)="addFolder()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-toast [isOpen]="isToastOpen" [message]="toastMessage" [duration]="5000" (didDismiss)="setToastOpen()"></ion-toast>
+    <ion-toast [isOpen]="isToastVOpen" [message]="toastVMessage" [duration]="5000" (didDismiss)="setToastVOpen()"></ion-toast>
+  </div>
+</ion-content>

@@ -1,0 +1,15 @@
+
+  @if(folder){
+    <ion-card button="true" [routerLink]="['folder']" [queryParams]="{id: folder.id}">
+      <ion-card-header>
+        <div>
+          <ion-icon name="folder" size="large" color="secondary"></ion-icon>
+        </div>
+        <div>
+          <ion-card-title>{{ folder.name }}</ion-card-title>
+          <ion-card-subtitle>Nombre image(s): {{ folder.images.length }}</ion-card-subtitle>
+        </div>
+      </ion-card-header>
+    </ion-card>  
+  }
+

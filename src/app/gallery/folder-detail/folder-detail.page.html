@@ -1,0 +1,7 @@
+<ion-content [fullscreen]="true">
+  @if(folder){
+    @for(image of folder.images; track $index){
+      <img [src]="image.path" alt="">
+    }
+  }
+</ion-content>

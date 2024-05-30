@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { Observable, defer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +17,16 @@ export class StorageService {
   }
 
   public set(key: string, value: any) {
-    this._storage?.set(key, value);
+    return this._storage?.set(key, value);
   }
 
-  public get(key: string) {
+  private getData(key: string): Promise<any> | undefined {
     return this._storage?.get(key);
+  }
+
+  public get(key: string): Observable<any>{
+
+    return defer(async () => this.getData(key))
   }
 
   public clear(){
